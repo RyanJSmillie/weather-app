@@ -4,6 +4,10 @@ body {
     background-color: #eceef1;
 }
 
+.weather-app {
+    margin: 20px;
+}
+
 * {
     font-family: 'Roboto', sans-serif;
 }
