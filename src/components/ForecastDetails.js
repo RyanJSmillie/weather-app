@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-function ForecastDetails(props) {
-  const { date, temperature, humidity, wind } = props;
+function ForecastDetails({ forecasts }) {
+  const { date, temperature, humidity, wind } = forecasts;
   const formattedDate = new Date(date).toDateString();
   return (
     <div className="forecast-details" data-testid="forecast-details">
@@ -18,15 +18,23 @@ function ForecastDetails(props) {
 
 export default ForecastDetails;
 
-ForecastDetails.propTypes = {
-  date: PropTypes.number.isRequired,
-  temperature: PropTypes.shape({
-    min: PropTypes.number,
-    max: PropTypes.number,
-  }).isRequired,
-  humidity: PropTypes.number.isRequired,
-  wind: PropTypes.shape({
-    speed: PropTypes.number,
-    direction: PropTypes.string,
-  }).isRequired,
-};
+ForecastDetails.propTypes = [
+  {
+    forecasts: PropTypes.shape({
+      date: PropTypes.number.isRequired,
+      description: PropTypes.string.isRequired,
+      icon: PropTypes.string.isRequired,
+      humidity: PropTypes.number.isRequired,
+
+      temperature: PropTypes.shape({
+        min: PropTypes.number,
+        max: PropTypes.number,
+      }).isRequired,
+
+      wind: PropTypes.shape({
+        speed: PropTypes.number,
+        direction: PropTypes.string,
+      }).isRequired,
+    }).isRequired,
+  },
+];

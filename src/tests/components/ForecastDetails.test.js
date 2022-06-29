@@ -3,32 +3,18 @@ import { render } from "@testing-library/react";
 import ForecastDetails from "../../components/ForecastDetails";
 
 describe("ForecastDetails", () => {
-  const validProps = [
-    {
-      date: 1111111,
-      temperature: {
-        max: 22,
-        min: 12,
-      },
-      humidity: 15,
-      wind: {
-        speed: 15,
-        direction: "n",
-      },
+  const validProps = {
+    date: 1111111,
+    temperature: {
+      max: 22,
+      min: 12,
     },
-    {
-      date: 2222222,
-      temperature: {
-        max: 23,
-        min: 11,
-      },
-      humidity: 16,
-      wind: {
-        speed: 16,
-        direction: "e",
-      },
+    humidity: 15,
+    wind: {
+      speed: 15,
+      direction: "n",
     },
-  ];
+  };
 
   it("renders correctly", () => {
     const { asFragment } = render(<ForecastDetails forecasts={validProps} />);
@@ -40,6 +26,6 @@ describe("ForecastDetails", () => {
       <ForecastDetails forecasts={validProps} />
     );
 
-    expect(getAllByTestId("forecast-details")).toHaveLength(2);
+    expect(getAllByTestId("forecast-details")).toHaveLength(1);
   });
 });
