@@ -1,58 +1,48 @@
 import "../styles/App.css";
-import React, { useState } from "react";
-import PropTypes from "prop-types";
+import React, { useEffect, useState } from "react";
 import LocationDetails from "./LocationsDetails";
 import ForecastSummaries from "./ForecastSummaries";
 import ForecastDetails from "./ForecastDetails";
+import getForecast from "../requests/getForecast";
+import SearchForm from "./SearchForm";
 
-function App({ location, forecasts }) {
-  const { city, country } = location;
-  const [selectedDate, setselectedDate] = useState(forecasts[0].date);
+function App() {
+  const [forecasts, setForecasts] = useState([]);
+  const [location, setLocation] = useState({ city: "", country: "" });
+  const [selectedDate, setSelectedDate] = useState(0);
+  const [searchText, setSearchText] = useState("");
 
   const selectedForecast = forecasts.find(
     (forecast) => forecast.date === selectedDate
   );
 
   const handleForecastSelect = (date) => {
-    setselectedDate(date);
+    setSelectedDate(date);
   };
+
+  const handleCitySearch = () => {
+    getForecast(searchText, setSelectedDate, setForecasts, setLocation);
+  };
+
+  useEffect(() => {
+    getForecast(setSelectedDate, setForecasts, setLocation);
+  }, []);
 
   return (
     <div className="weather-app">
-      <LocationDetails city={city} country={country} />
+      <LocationDetails city={location.city} country={location.country} />
+      <SearchForm
+        searchText={searchText}
+        setSearchText={setSearchText}
+        onSubmit={handleCitySearch}
+      />
       <ForecastSummaries
         forecasts={forecasts}
         onForecastSelect={handleForecastSelect}
       />
-      <ForecastDetails forecasts={selectedForecast} />
+      {selectedForecast && <ForecastDetails forecasts={selectedForecast} />}
     </div>
   );
 }
 
 export default App;
-
-App.propTypes = {
-  location: PropTypes.shape({
-    city: PropTypes.string,
-    country: PropTypes.string,
-  }).isRequired,
-
-  forecasts: PropTypes.arrayOf(
-    PropTypes.shape({
-      date: PropTypes.number.isRequired,
-      description: PropTypes.string.isRequired,
-      icon: PropTypes.string.isRequired,
-      humidity: PropTypes.number.isRequired,
-
-      temperature: PropTypes.shape({
-        min: PropTypes.number,
-        max: PropTypes.number,
-      }).isRequired,
-
-      wind: PropTypes.shape({
-        speed: PropTypes.number,
-        direction: PropTypes.string,
-      }).isRequired,
-    })
-  ).isRequired,
-};
