@@ -9,6 +9,7 @@ describe("ForecastDetails", () => {
       max: 22,
       min: 12,
     },
+    description: "Clear",
     humidity: 15,
     wind: {
       speed: 15,
