@@ -1,6 +1,7 @@
 import React from "react";
 import { render } from "@testing-library/react";
 import ForecastSummary from "../../components/ForecastSummary";
+import handleForecastSelect from "../../components/App";
 
 describe("Forecast Summary", () => {
   const validProps = {
@@ -13,12 +14,15 @@ describe("Forecast Summary", () => {
     },
   };
 
+  const OnSelect = handleForecastSelect;
+
   it("renders correctly", () => {
     const { asFragement } = render(
       <ForecastSummary
         date={validProps.date}
         description={validProps.description}
         icon={validProps.icon}
+        onSelect={OnSelect}
         temperature={validProps.temperature}
       />
     );
@@ -32,6 +36,7 @@ describe("Forecast Summary", () => {
         date={validProps.date}
         description={validProps.description}
         icon={validProps.icon}
+        onSelect={OnSelect}
         temperature={validProps.temperature}
       />
     );
